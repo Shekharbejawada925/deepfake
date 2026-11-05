@@ -1,0 +1,6 @@
+-r requirements.txt
+numpy>=1.26,<3
+opencv-python-headless>=4.8
+# Install matching torch and torchvision versions for your platform.
+torch>=2.3
+torchvision>=0.18
