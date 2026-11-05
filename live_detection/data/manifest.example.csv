@@ -1,0 +1,7 @@
+path,label,group,split
+videos/person01_real.mp4,real,person01,train
+videos/person01_fake.mp4,fake,person01,train
+videos/person02_real.mp4,real,person02,val
+videos/person02_fake.mp4,fake,person02,val
+videos/person03_real.mp4,real,person03,test
+videos/person03_fake.mp4,fake,person03,test

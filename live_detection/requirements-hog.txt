@@ -1,0 +1,4 @@
+# Optional. Set --detector hog during preparation, then train with that contract.
+# dlib may require CMake and a platform C++ compiler.
+face-recognition==1.3.0
+dlib==19.24.6

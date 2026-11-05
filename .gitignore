@@ -1,0 +1,18 @@
+# Local environments, credentials, weights and media
+.venv/
+.browser-tests/
+.env
+__pycache__/
+.pytest_cache/
+*.pyc
+*.pt
+*.pth
+*.onnx
+*.mp4
+*.mov
+*.avi
+*.mkv
+*.webm
+*.zip
+live_detection/data/runtime/
+live_detection/data/prepared*/

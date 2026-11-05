@@ -1,0 +1,44 @@
+{
+  "format_version": 2,
+  "architecture": "resnext50_lstm_legacy_compat",
+  "classes": [
+    "fake",
+    "real"
+  ],
+  "sequence_length": 10,
+  "sample_fps": 10.0,
+  "image_size": 112,
+  "color_space": "BGR",
+  "mean": [
+    0.485,
+    0.456,
+    0.406
+  ],
+  "std": [
+    0.229,
+    0.224,
+    0.225
+  ],
+  "hidden_size": 2048,
+  "lstm_layers": 1,
+  "dropout": 0.4,
+  "detector": "haar",
+  "crop_margin": 0.0,
+  "min_face_pixels": 64,
+  "min_blur": 20.0,
+  "real_threshold": 0.2,
+  "fake_threshold": 0.8,
+  "temperature": 1.0,
+  "calibrated": false,
+  "training_complete": false,
+  "resize_method": "PIL_BILINEAR",
+  "source_sha256": "57f5daa3bddec309219e0591fbe3d65506fb8d7312b45bffad686695c0089747",
+  "profile_name": "Supplied legacy checkpoint",
+  "temporal_behavior": "last_frame_only",
+  "label_mapping_verified": false,
+  "label_mapping_source": "Uploaded app.py: class 0=fake, class 1=real; training labels unavailable",
+  "preprocessing_source": "Uploaded app.py BGR crops and PIL bilinear resize; portable Haar detection replaces HOG",
+  "filename_sequence_length": 60,
+  "sampling_source": "10 fps reporting profile; original training rate unknown",
+  "window_policy": "10 sampled frames per live update; score final frame only; partial uploads allowed"
+}
