@@ -10,6 +10,7 @@ app.config["MAX_CONTENT_LENGTH"] = 80 * 1024 * 1024
 from video_upload import uploads
 app.register_blueprint(uploads)
 predictor = Predictor()
+app.extensions['predictor'] = predictor
 
 @app.get("/live")
 def live():
