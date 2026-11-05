@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>FrameCheck · Deepfake video analysis</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='app.css') }}">
+  <script type="module" src="{{ url_for('static', filename='app.js') }}"></script>
+</head>
+<body>
+<header class="topbar"><a class="brand" href="/">FrameCheck<span>VIDEO FORENSICS LAB</span></a><a href="/guide">Setup &amp; methodology ↗</a></header>
+<main>
+  <section class="intro"><div><p class="eyebrow">DEEPFAKE DETECTION FOR VIDEO STREAMING</p><h1>Inspect the video.<br>Understand the evidence.</h1><p class="lede">Check uploaded videos, your webcam, shared-screen video, or a direct live stream.</p></div><div class="model-state"><span id="model-dot" class="dot"></span><span id="model-state">Checking model</span><small id="model-details">Connecting to the local service</small></div></section>
+  <div id="setup-banner" class="notice" hidden><strong>Model setup required</strong><span id="setup-message"></span><a href="/guide">Open setup guide ↗</a></div>
+  <div id="error" class="error" role="alert" hidden></div>
+  <div class="workspace">
+    <section class="source-panel">
+      <h2>Video source</h2>
+      <div class="tabs" role="tablist" aria-label="Video source"><button id="tab-upload" class="tab active" role="tab" aria-selected="true" aria-controls="panel-upload" data-mode="upload">Upload</button><button id="tab-camera" class="tab" role="tab" aria-selected="false" aria-controls="panel-camera" data-mode="camera">Webcam</button><button id="tab-screen" class="tab" role="tab" aria-selected="false" aria-controls="panel-screen" data-mode="screen">Screen video</button><button id="tab-stream" class="tab" role="tab" aria-selected="false" aria-controls="panel-stream" data-mode="stream">Stream URL</button></div>
+      <div id="panel-upload" class="source-form" role="tabpanel" aria-labelledby="tab-upload"><label class="dropzone" for="file"><span class="upload-symbol">↑</span><strong>Choose a video</strong><span id="filename">MP4, MOV, AVI, MKV or WebM</span><input id="file" type="file" accept="video/*,.mkv"></label><button id="analyze" class="primary" disabled>Analyze video</button><p id="upload-limits" class="hint"></p></div>
+      <div id="panel-camera" class="source-form" role="tabpanel" aria-labelledby="tab-camera" hidden><h3>Your camera, live</h3><p>Keep one face visible and use even lighting. Allow camera access when your browser asks.</p><button id="camera-start" class="primary" disabled>Start webcam</button><p class="hint">Sampled frames are sent to this server for analysis and are not saved. Preview works before model setup.</p></div>
+      <div id="panel-screen" class="source-form" role="tabpanel" aria-labelledby="tab-screen" hidden><h3>Check video playing on your screen</h3><p>Share the tab or window containing the video. Enlarge the face and keep this analysis page visible beside it.</p><button id="screen-start" class="primary" disabled>Share video tab or window</button><p class="hint">Your browser asks what to share. Sampled frames go to this server; audio is not captured. Protected video may appear black. Stop sharing at any time.</p></div>
+      <div id="panel-stream" class="source-form" role="tabpanel" aria-labelledby="tab-stream" hidden><label for="stream-url">Direct media URL</label><input id="stream-url" type="url" placeholder="rtsp://camera-host:8554/live"><button id="stream-start" class="primary" disabled>Connect stream</button><p class="hint">Use an RTSP feed, HLS playlist or HTTP media stream. A YouTube or Netflix webpage is not a media URL.</p><p id="stream-help" class="hint"></p></div>
+      <div class="capture"><video id="video" controls playsinline hidden></video><img id="stream-preview" alt="Most recent sampled stream frame" hidden><div id="preview-empty"><span>◉</span><p>Your video appears here</p></div></div>
+      <div class="source-footer"><span id="session-state">No active session</span><button id="stop" class="secondary" hidden>Stop session</button></div>
+    </section>
+    <section class="evidence-panel" aria-live="polite">
+      <div class="section-heading"><h2>Analysis</h2><span id="window-count">0 windows</span></div>
+      <div class="verdict"><p id="result-scope" class="eyebrow">SAMPLED VIDEO EVIDENCE</p><h2 id="verdict">Ready when you are</h2><p id="verdict-detail">Choose a source to analyze with the loaded model. Unusable and ambiguous windows remain inconclusive.</p></div>
+      <div class="score-row"><div><span>Latest fake-model score</span><strong id="score">—</strong></div><div><span>Scored windows</span><strong id="coverage">—</strong></div><div><span>Latest processing time</span><strong id="latency">—</strong></div></div>
+      <p class="hint">A model score is not verified accuracy. “Likely real” is not proof that a video is authentic.</p>
+      <div class="section-heading timeline-heading"><h3>Window timeline</h3><button id="download" class="text-button" disabled>Download JSON ↓</button></div>
+      <div id="timeline-empty" class="empty">Completed windows will appear here with their time range and result.</div>
+      <div class="table-scroll"><table id="timeline" hidden><thead><tr><th>Time (s)</th><th>Result</th><th>Fake score</th><th>Evidence</th></tr></thead><tbody id="timeline-body"></tbody></table></div>
+      <p id="timing-note" class="hint"></p>
+    </section>
+  </div>
+  <footer><p>Facial video analysis · ResNeXt50 + LSTM</p><p>Audio, full-body manipulation and platform integration are outside this detector’s scope.</p></footer>
+</main>
+</body></html>
