@@ -4,6 +4,7 @@
 
 ## Features
 - Browser webcam capture (localhost or HTTPS) with Start/Stop.
+- Local video upload (MP4/MOV/AVI/MKV/WebM, 80 MB cap), temporary file cleanup, bounded frame sampling.
 - Bounded 8-frame inference batches; only one request in flight per browser tab.
 - Flask API with input size, format, count and dimension checks.
 - Server-side single-face and blur quality gate, abstention on unusable evidence.
