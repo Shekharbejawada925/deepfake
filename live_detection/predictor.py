@@ -14,12 +14,15 @@ class Predictor:
             self.message = "No trained model connected. Set PREDICTOR_MODULE."
             return
         try:
-            fn = getattr(importlib.import_module(name), "predict_frames")
+            module = importlib.import_module(name)
+            fn = getattr(module, "predict_frames")
+            if hasattr(module, "is_ready") and not module.is_ready():
+                raise ModelUnavailable("Trained checkpoint not found; set DEEPFAKE_CHECKPOINT.")
             if not callable(fn):
                 raise TypeError("predict_frames must be callable")
             self.fn = fn
             self.message = "Model adapter loaded"
-        except (ImportError, AttributeError, TypeError) as exc:
+        except (ImportError, AttributeError, TypeError, ModelUnavailable) as exc:
             self.message = f"Adapter unavailable: {exc}"
 
     @property
@@ -29,7 +32,12 @@ class Predictor:
     def predict(self, frames):
         if not self.ready:
             raise ModelUnavailable(self.message)
-        score = float(self.fn(frames))
+        try:
+            score = float(self.fn(frames))
+        except ValueError as exc:
+            return {"label":"Inconclusive", "fake_probability":None,
+                    "frames_analyzed":len(frames), "reason":str(exc),
+                    "notice":"No authenticity verdict was produced."}
         if not math.isfinite(score) or not 0 <= score <= 1:
             raise ValueError("Model must return P(fake) between 0 and 1")
         result = "Likely fake" if score >= .65 else "Likely real" if score <= .35 else "Uncertain"
