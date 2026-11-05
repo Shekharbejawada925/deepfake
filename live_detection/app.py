@@ -6,7 +6,9 @@ from PIL import Image
 from predictor import Predictor, ModelUnavailable
 
 app = Flask(__name__)
-app.config["MAX_CONTENT_LENGTH"] = 12 * 1024 * 1024
+app.config["MAX_CONTENT_LENGTH"] = 80 * 1024 * 1024
+from video_upload import uploads
+app.register_blueprint(uploads)
 predictor = Predictor()
 
 @app.get("/live")
