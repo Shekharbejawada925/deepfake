@@ -14,6 +14,9 @@ from PIL import Image
 _MODEL = None
 _LOCK = threading.Lock()
 
+def is_ready():
+    return Path(os.getenv('DEEPFAKE_CHECKPOINT', 'models/df_model.pt')).expanduser().is_file()
+
 def _build_and_load():
     import torch
     from torch import nn
