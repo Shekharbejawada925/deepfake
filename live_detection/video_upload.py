@@ -13,7 +13,7 @@ MAX_FRAMES_TO_SCAN = 900
 
 @uploads.post("/api/video/predict")
 def upload_predict():
-    from app import predictor
+    predictor = current_app.extensions['predictor']
     if not predictor.ready:
         return jsonify(error=predictor.message), 503
     f=request.files.get("file")
